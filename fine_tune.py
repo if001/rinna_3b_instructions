@@ -182,3 +182,7 @@ def train(
     print(
         "\n If there's a warning about missing keys above, please disregard :)"
     )
+
+
+if __name__ == "__main__":
+    fire.Fire(train)
