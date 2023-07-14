@@ -117,11 +117,11 @@ def train(
                     prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
                     if j != i:
                         prompt += '\n</s>\n'
-                    print(prompt)
-                    print('-'*20)
+                    #print(prompt)
+                    #print('-'*20)
                     tokenized_prompt = tokenize(prompt, add_eos_token=True)
-                    print('tokenizered ', tokenized_prompt)
-                    print('='*20)
+                    #print('tokenizered ', tokenized_prompt)
+                    #print('='*20)
                     data.append(tokenized_prompt)
         return data
     
