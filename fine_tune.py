@@ -116,9 +116,11 @@ def train(
                     prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
                     if j != i:
                         prompt += '\n\n'
-                    #print(prompt)
-                    # print('-'*20)
+                    print(prompt)
+                    print('-'*20)
                     tokenized_prompt = tokenize(prompt, add_eos_token=True)
+                    print('tokenizered ', tokenized_prompt)
+                    print('='*20)
                     data.append(tokenized_prompt)
         return data
     
@@ -132,6 +134,7 @@ def train(
     val_data = (
         train_val["test"].shuffle().map(generate_and_tokenize_prompt)
     )
+    exit(0)
     ## --- data set ---
 
     gradient_accumulation_steps = batch_size // micro_batch_size
