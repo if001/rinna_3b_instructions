@@ -4,7 +4,7 @@ import sys
 import fire
 import torch
 import transformers
-from datasets import load_dataset
+from datasets import load_dataset, Dataset
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model, prepare_model_for_int8_training, TaskType
@@ -110,7 +110,8 @@ def train(
         data = []
         prefix = "以下はユーザーとアシスタントの会話です。アシスタントは親切で丁寧に詳細を回答します。\n\n"
         for conversations in data_point["conversations"]:
-            for i in range(len(conversations)):
+            print('conversations', conversations)
+            for i in range(len(conversations)):                
                 prompt = prefix
                 for j, v in enumerate(conversations[:i+1]):
                     prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
@@ -134,6 +135,8 @@ def train(
     val_data = (
         train_val["test"].shuffle().map(generate_and_tokenize_prompt)
     )
+    train_data = Dataset.from_list(train_data)
+    val_data = Dataset.from_list(val_data)
     exit(0)
     ## --- data set ---
 
