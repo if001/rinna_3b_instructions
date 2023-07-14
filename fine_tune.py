@@ -114,9 +114,9 @@ def train(
             for i in range(len(conversations)):                
                 prompt = prefix
                 for j, v in enumerate(conversations[:i+1]):
-                    prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"] + '</s>'
+                    prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
                     if j != i:
-                        prompt += '\n\n'
+                        prompt += '\n\n</s>'
                     print(prompt)
                     print('-'*20)
                     tokenized_prompt = tokenize(prompt, add_eos_token=True)
