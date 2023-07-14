@@ -110,10 +110,8 @@ def train(
         data = []
         prefix = "以下はユーザーとアシスタントの会話です。アシスタントは親切で丁寧に詳細を回答します。\n\n"
         print('gen')
-        for conversations in data_point["conversations"]:
-            print('conversations_len', len(conversations))
-            for i in range(len(conversations)):
-                print('conversations_i', i, conversations[i])
+        for conversations in data_point["conversations"]:            
+            for i in range(len(conversations)):                
                 prompt = prefix
                 for j, v in enumerate(conversations[:i+1]):
                     prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
@@ -131,15 +129,14 @@ def train(
     train_val = data["train"].train_test_split(
             test_size=val_set_size, shuffle=True, seed=42
     )
-    train_data = (
-        train_val["train"].shuffle().map(generate_and_tokenize_prompt)
-    )
-    val_data = (
-        train_val["test"].shuffle().map(generate_and_tokenize_prompt)
-    )
+    train_data = generate_and_tokenize_prompt(train_val["train"].shuffle())
+    print("train_data len", len(train_data))
+    val_data = generate_and_tokenize_prompt(train_val["test"].shuffle())
+    print("val_data", len(val_data))
+    print("train_data", train_data[0])
+
     train_data = Dataset.from_list(train_data)
-    val_data = Dataset.from_list(val_data)
-    exit(0)
+    val_data = Dataset.from_list(val_data)    
     ## --- data set ---
 
     gradient_accumulation_steps = batch_size // micro_batch_size
