@@ -109,9 +109,11 @@ def train(
     def generate_and_tokenize_prompt(data_point):
         data = []
         prefix = "以下はユーザーとアシスタントの会話です。アシスタントは親切で丁寧に詳細を回答します。\n\n"
+        print('gen')
         for conversations in data_point["conversations"]:
-            print('conversations', conversations)
-            for i in range(len(conversations)):                
+            print('conversations_len', len(conversations))
+            for i in range(len(conversations)):
+                print('conversations_i', i, conversations[i])
                 prompt = prefix
                 for j, v in enumerate(conversations[:i+1]):
                     prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
