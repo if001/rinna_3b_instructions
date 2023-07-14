@@ -114,7 +114,7 @@ def train(
             for i in range(len(conversations)):                
                 prompt = prefix
                 for j, v in enumerate(conversations[:i+1]):
-                    prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"]
+                    prompt += "### ユーザー: \n" + v["S"] + '\n\n' + "### アシスタント: \n" + v["U"] + '</s>'
                     if j != i:
                         prompt += '\n\n'
                     print(prompt)
